@@ -70,7 +70,7 @@ Asegúrate de que `appsettings.json` esté configurado correctamente para la lim
 1. Clona el repositorio:
 
    ```bash
-   git clone https://github.com/tu_usuario/tu_repositorio.git
+   git clone https://github.com/VictorHerdz10/ACRP_API.git
    cd tu_repositorio
    ```
 
