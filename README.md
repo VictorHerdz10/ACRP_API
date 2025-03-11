@@ -1,6 +1,3 @@
-Aquí tienes un archivo `README.md` completo, con iconos y sintaxis correcta, listo para copiar y pegar:
-
-```markdown
 # 🚀 ACRP API
 
 Este proyecto es una API para gestionar usuarios, secciones y páginas. Utiliza **ASP.NET Core**, **MongoDB** y **JWT** para la autenticación.
@@ -160,5 +157,3 @@ Este proyecto está licenciado bajo la **Licencia MIT**. Consulta el archivo [LI
 - **Iconos**: Usa emojis para mejorar la visualización.
 - **Sintaxis correcta**: Formato Markdown válido para GitHub.
 - **Secciones claras**: Requisitos, configuración, instalación, ejecución, endpoints, middleware, rate limiting, contribuciones y licencia.
-
-¡Copia y pega este contenido en tu archivo `README.md` y estará listo para usar! 😊
