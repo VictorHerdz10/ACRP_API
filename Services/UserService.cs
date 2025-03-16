@@ -16,6 +16,7 @@ namespace ACRP_API.Services
         bool ValidatePassword(User user, string password);
         Task<string> GetRoleAsync(string userId);
         Task<List<UserResponseDto>> GetAllUsersAsync();
+        Task<PerfilResponseDto> GetPerfilAsync(string Email);
     }
 
     public class UsersService(MongoDbContext context) : IUserService
@@ -57,7 +58,15 @@ namespace ACRP_API.Services
         public async Task<List<UserResponseDto>> GetAllUsersAsync()
         {
             var users = await _usersCollection.Find(_ => true).ToListAsync();
-            return [.. users.Select(MapToDtoUser.MapToDto)];
+
+            return [.. users
+                .Where(user => user != null)
+                .Select(GenericMapper.MapToDto<User, UserResponseDto>)];
+        }
+        public async Task<PerfilResponseDto> GetPerfilAsync(string email)
+        {
+            User user = await _usersCollection.Find(x => x.Email == email).FirstOrDefaultAsync();
+            return GenericMapper.MapToDto<User, PerfilResponseDto>(user);
         }
     }
 }
