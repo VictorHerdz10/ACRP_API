@@ -204,4 +204,39 @@ public class UserController(
             return StatusCode(500, new ErrorResponse { Message = "Error al obtener todos los usuarios" });
         }
     }
+    [HttpGet("perfil")]
+    [Authorize]
+    [SwaggerOperation(
+        Summary = "Obtener el perfil del usuario",
+        Description = "Obtiene tlos datos del perfil del usuario autenticado.")]
+    [SwaggerResponse(200, "Lista la informacion del perfil de usuario correctamente", typeof(PerfilResponseDto))]
+    [SwaggerResponse(400, "No pude encontrar la información del perfil", typeof(ErrorResponse))]
+    [SwaggerResponse(401, "Usuario no autenticado", typeof(ErrorResponse))]
+    [SwaggerResponse(403, "No tiene permisos  para realizar esta acción", typeof(ErrorResponse))]
+    [SwaggerResponse(500, "Error al obtener todos los usuarios", typeof(ErrorResponse))]
+    public async Task<IActionResult> GetPerfil()
+    {
+        try
+        {
+            var validationResult = AuthUtils.ValidateUserAndAdmin(User);
+            if (validationResult is not OkResult)
+            {
+                return validationResult;
+            }
+            var Email = User.FindFirst(ClaimTypes.Email)?.Value;
+            if (Email == null)
+            {
+
+                return BadRequest(new ErrorResponse { Message = "No pude encontrar la información del usuario" });
+
+            }
+            var perfil = await _usersService.GetPerfilAsync(Email);
+            return Ok(perfil);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error al obtener todos los usuarios");
+            return StatusCode(500, new ErrorResponse { Message = "Error al obtener todos los usuarios" });
+        }
+    }
 }
