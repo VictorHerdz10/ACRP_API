@@ -23,13 +23,15 @@ namespace ACRP_API.Services
         public async Task<List<SectionResponseDto>> GetAllSectionsAsync()
         {
             var sections = await _sectionsCollection.Find(_ => true).ToListAsync();
-            return sections.Select(MapToDtoSection.MapToDto).ToList();
+            return [.. sections
+            .Where(Section => GetSectionByIdAsync != null)
+            .Select(GenericMapper.MapToDto<Section, SectionResponseDto>)];
         }
 
         public async Task<SectionResponseDto?> GetSectionByIdAsync(string id)
         {
             var section = await _sectionsCollection.Find(s => s.Id == id).FirstOrDefaultAsync();
-            return section != null ? MapToDtoSection.MapToDto(section) : null;
+            return section != null ? GenericMapper.MapToDto<Section, SectionResponseDto>(section) : null;
         }
 
         public async Task<Section> CreateSectionAsync(CreateSectionDto sectionDto)
