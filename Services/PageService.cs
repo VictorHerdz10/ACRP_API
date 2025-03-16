@@ -3,6 +3,7 @@ using MongoDB.Driver;
 using ACRP_API.Context;
 using ACRP_API.Dtos.Pages;
 using ACRP_API.Utils;
+using MongoDB.Driver.Linq;
 
 namespace ACRP_API.Services
 {
@@ -25,17 +26,20 @@ namespace ACRP_API.Services
         public async Task<List<PageResponseDto>> GetAllPagesAsync()
         {
             var pages = await _pagesCollection.Find(_ => true).ToListAsync();
-            return pages.Select(MapToDtoPage.MapToDto).ToList();
+            return [.. pages
+            .Where(page => page != null)
+            .Select(GenericMapper.MapToDto<Page,PageResponseDto>)];
         }
 
         public async Task<PageResponseDto?> GetPageByIdAsync(string id)
         {
             var page = await _pagesCollection.Find(p => p.Id == id).FirstOrDefaultAsync();
-            return page != null ? MapToDtoPage.MapToDto(page) : null;
+            return page != null ? GenericMapper.MapToDto<Page, PageResponseDto>(page) : null;
         }
 
         public async Task<Page> CreatePageAsync(CreatePageDto pageDto)
         {
+            Console.WriteLine(pageDto);
             var page = new Page
             {
                 Name = pageDto.Name,
