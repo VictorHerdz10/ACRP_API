@@ -11,7 +11,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace ACRP_API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("[controller]")]
 public class UserController(
     IUserService usersService,
     GenerateJwt generateJwt,

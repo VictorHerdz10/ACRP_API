@@ -9,7 +9,7 @@ using ACRP_API.Utils;
 namespace ACRP_API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("[controller]")]
 public class SectionController(ISectionService sectionService, ILogger<SectionController> logger) : ControllerBase
 {
     private readonly ISectionService _sectionService = sectionService;

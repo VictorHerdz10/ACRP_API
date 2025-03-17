@@ -9,7 +9,7 @@ using ACRP_API.Utils;
 namespace ACRP_API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("[controller]")]
 public class PageController(IPageService pageService, ILogger<PageController> logger) : ControllerBase
 {
     private readonly IPageService _pageService = pageService;
