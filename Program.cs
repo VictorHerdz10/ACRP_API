@@ -9,6 +9,7 @@ using Microsoft.OpenApi.Models;
 using ACRP_API.Utils;
 using AspNetCoreRateLimit;
 using ACRP_API.Middleware;
+using ACRP_API.Conventions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -83,7 +84,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Conventions.Add(new ApiRoutePrefixConvention("api"));
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
